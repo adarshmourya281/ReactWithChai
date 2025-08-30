@@ -1,5 +1,20 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Download, CheckCircle2, Briefcase, GraduationCap, Code2, ShieldCheck, TerminalSquare, Building2 } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  ExternalLink,
+  Download,
+  CheckCircle2,
+  Briefcase,
+  GraduationCap,
+  Code2,
+  ShieldCheck,
+  TerminalSquare,
+  Building2,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +32,8 @@ const PROFILE = {
   email: "adarshmourya2810@gmail.com",
   github: "https://github.com/adarshmourya281",
   linkedin: "https://www.linkedin.com/", // add your LinkedIn profile URL
-  resumeUrl: "/resume.pdf", // replace with your hosted resume path if needed
+  resumeUrl: "https://drive.google.com/file/d/1hxWd4m5TQ_yS71CmOR0tDsXFWip_0lVf/view?usp=sharing", // place resume.pdf inside public/
+  photo: "/profile.jpeg", // place profile.jpg inside public/
 };
 
 const SKILLS = [
@@ -101,7 +117,7 @@ export default function Portfolio() {
       {/* Navbar */}
       <header className="sticky top-0 z-20 bg-white/70 backdrop-blur border-b">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-semibold"><Code2 className="h-5 w-5"/> Adarsh Mourya</div>
+          <div className="flex items-center gap-2 font-semibold"><Code2 className="h-5 w-5"/> {PROFILE.name}</div>
           <nav className="hidden md:flex items-center gap-4 text-sm">
             <a href="#projects" className="hover:underline">Projects</a>
             <a href="#skills" className="hover:underline">Skills</a>
@@ -111,7 +127,7 @@ export default function Portfolio() {
           </nav>
           <div className="flex items-center gap-2">
             <Button asChild size="sm" variant="outline">
-              <a href={PROFILE.resumeUrl} target="_blank" rel="noreferrer"><Download className="h-4 w-4 mr-1"/>Resume</a>
+              <a href={PROFILE.resumeUrl} download><Download className="h-4 w-4 mr-1"/>Resume</a>
             </Button>
             <Button asChild size="sm">
               <a href="#contact">Hire Me</a>
@@ -123,6 +139,7 @@ export default function Portfolio() {
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-4 pt-12 pb-10">
         <div className="grid md:grid-cols-5 gap-8 items-center">
+          {/* Left text */}
           <div className="md:col-span-3">
             <h1 className="text-3xl md:text-5xl font-bold tracking-tight">{PROFILE.name}</h1>
             <p className="mt-2 text-lg md:text-xl text-slate-600">{PROFILE.role}</p>
@@ -141,8 +158,18 @@ export default function Portfolio() {
               </Button>
             </div>
           </div>
-          <div className="md:col-span-2">
-            <Card className="rounded-2xl shadow-md">
+
+          {/* Right photo + contact card */}
+          <div className="md:col-span-2 flex flex-col items-center gap-6">
+            {/* Profile Photo */}
+            <img
+              src={PROFILE.photo}
+              alt={PROFILE.name}
+              className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-lg border-4 border-white"
+            />
+
+            {/* Contact Info Card */}
+            <Card className="rounded-2xl shadow-md w-full">
               <CardContent className="p-5">
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-2"><MapPin className="h-4 w-4"/> {PROFILE.location}</div>
@@ -271,7 +298,7 @@ export default function Portfolio() {
         <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-500 flex flex-col md:flex-row items-center justify-between gap-3">
           <p>© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <a className="hover:underline" href={PROFILE.resumeUrl} target="_blank" rel="noreferrer">Download Resume</a>
+            <a className="hover:underline" href={PROFILE.resumeUrl} download>Download Resume</a>
             <a className="hover:underline" href="#">Privacy</a>
           </div>
         </div>
@@ -288,7 +315,6 @@ function SimpleContactForm() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // In production, connect this to an email API or backend endpoint
     setSent(true);
     setTimeout(() => setSent(false), 2500);
     setName("");
@@ -296,6 +322,7 @@ function SimpleContactForm() {
     setMessage("");
   };
 
+  
   return (
     <form onSubmit={onSubmit} className="space-y-3">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
